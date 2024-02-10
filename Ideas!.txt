@@ -1,0 +1,19 @@
+Vivi    Violet     Idea desc.                                   
+
+[]      [✅]       Color by number
+
+[]      []       Photoshop-like program
+
+[]      []         Something with fractals
+
+[]      []         Image/art based programming language
+
+[✅]    []         Online turn-based painting
+
+[✅]    []       Splatoon-like game
+
+[]      []          Something based on music
+
+[]      [✅]          Poetry?
+
+[✅]    [✅]  !!!  Terrian generation (Perlin Noise + wave function collapse) https://pypi.org/project/perlin-noise/

@@ -1,0 +1,18 @@
+Height Map
+
+256x256/512x512 terrain with ui to the left
+
+Tiled
+    -Pixel art
+    -Color Depending on height/humidity/temp
+
+Biome Map
+    - Have a humidity + Temperature map + combine them to the biome map
+    
+
+Parameters
+    - Sliders For
+    - Height
+    - General Humidity
+    - General Temperature
+
