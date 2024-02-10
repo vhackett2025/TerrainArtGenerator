@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
+import os
 from texture_map_handler import *
 from MapGeneration import *
 
@@ -24,12 +25,13 @@ def generate_parameter_slider(root, label_name: str):
     slider.pack(side= tk.TOP, anchor="w", padx=5)
     return var
 
-def update_canvas_widget(root, canvas: tk.Canvas, size: int, tile_size: int, parameter_maps: dict, wetness: float):
-    canvas.pack_forget()
+def update_canvas_widget(canvas: tk.Canvas, size: int, tile_size: int, parameter_maps: dict, wetness: float):
     for y in range(size):
         for x in range(size):
             texture_name = get_file_name_from_noise_values(parameter_maps['temperature'][x][y], parameter_maps['humidity'][x][y])
-            canvas.create_image(x * tile_size, y * tile_size, image=ImageTk.PhotoImage(file=texture_name), anchor="center")
+            img = ImageTk.PhotoImage(file=texture_name)
+            print(texture_name)
+            canvas.create_image(x * tile_size, y * tile_size, image=img)
             
     canvas.place(relx=0.34, rely=0)
 
@@ -58,15 +60,19 @@ def main():
         'wetness' : generate_parameter_slider(root, "Wetness:"),
     }
     
-    lambda_update_canvas_widget = lambda: update_canvas_widget(root, canvas, size=10, tile_size=8, parameter_maps={
-        'height' : generateTerrain(int(climate_variables['height_extremeness'].get()) / 10),
-        'temperature' : generateTerrain(int(climate_variables['temperature'].get()) / 10),
-        'humidity' : generateTerrain(int(climate_variables['humidity'].get()) / 10)
+    lambda_update_canvas_widget = lambda: update_canvas_widget(canvas, size=10, tile_size=8, parameter_maps={
+        'height' : generateTerrain(int(climate_variables['height_extremeness'].get()) / 10, False),
+        'temperature' : generateTerrain(int(climate_variables['temperature'].get()) / 10, False),
+        'humidity' : generateTerrain(int(climate_variables['humidity'].get()) / 10, False)
         }, wetness=int(climate_variables['wetness'].get()))
     
     # Default canvas
-    canvas = tk.Canvas(root, width= 100, height=100)
-    canvas.place(relx=0.34, rely=0)
+    canvas = tk.Canvas(root, width= 503, height=503)
+    canvas.place(relx=0.34, rely=0.01)
+    #canvas.configure(bg='blue')
+    img = ImageTk.PhotoImage(file='C:/Users/Violet/Documents/CodeBashProject/textures/tileSet/1_1.png')
+    img = Image.open('C:/Users/Violet/Documents/CodeBashProject/textures/tileSet/1_1.png')
+    canvas.create_image(0, 0, image=img)    
 
     # "Generate" button
     generate_button = tk.Button(root, text='Generate!', width=25, command=lambda_update_canvas_widget)
