@@ -64,7 +64,7 @@ def generateTerrain(size,moisture,tempature):
                 #Tempature fields
             if (moistLevel=="H"and tempLevel=="M"):
                 noiseVal=2.0
-                #Tempature Woods
+                #Temprature Woods
             if (moistLevel=="L"and tempLevel=="H"):
                 noiseVal=1.8
                 #Savanna Shrubs

@@ -8,6 +8,7 @@ FONT_LARGE = ("Courier ", 14)
 FONT_MEDIUM = ("Courier", 12)
 FONT_SMALL = ("Courier", 10)
 
+# Creates a label and slider for a specified parameter, returns the slider object
 def generate_parameter_slider(root, label_name: str):
     
     label = tk.Label(root, text = label_name)
@@ -20,9 +21,12 @@ def generate_parameter_slider(root, label_name: str):
 
 def main():
     
+    # Setup window + root
     root = tk.Tk()
     root.title('Terrain Art Generator')
     root.geometry("900x600")
+    
+    # Vertical UI seperator line
     
     separator = ttk.Separator(root, orient='vertical')
     separator.place(relx=0.33, rely=0, relwidth=1, relheight=1)
@@ -32,13 +36,13 @@ def main():
     parameter_label.config(font =FONT_XL)
     parameter_label.pack(side= tk.TOP, anchor="w", padx=5, pady=5)
     
-    # Sliders
+    # Parameter Sliders
     generate_parameter_slider(root, "Height Extremeness:")
     generate_parameter_slider(root, "Humidity:")
     generate_parameter_slider(root, "Temperature:")
     generate_parameter_slider(root, "Water:")
 
-    # Generate button
+    # "Generate" button
     generate_button = tk.Button(root, text='Generate!', width=25, command=root.destroy)
     generate_button.config(font =FONT_LARGE)
     generate_button.pack(side= tk.BOTTOM, anchor="w", padx=5, pady=5)
