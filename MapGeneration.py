@@ -2,30 +2,22 @@ import matplotlib.pyplot as plt
 import random 
 from perlin_noise import PerlinNoise
 size=16
-
-moisture = 8
-
-tempature = 8
-
-def generateTerrain(size,moisture,tempature):
+def generateTerrain(size,octaveVal):
 
 
     #size is the square dimentions
     #octaves = thing we change!
     #seed is randomness its just random :P
-    moistNoise = PerlinNoise(octaves=moisture, seed=random.randrange(0,100))
-    tempNoise = PerlinNoise(octaves=tempature, seed=random.randrange(0,100))
+    noise = PerlinNoise(octaves=octaveVal, seed=random.randrange(0,100))
 
     #go through each pixel choiceing moist/temp value and depending on the two, choice what biome it is(4 for now will work) and then (for now) choice a color for each biome and go through each pixel again and assigning ect ect
     pic = []
-    moistLevel=0
-    tempLevel=0
     for i in range(size):
         row = []
         for j in range(size):
-            moistVal=moistNoise([i/size, j/size])
-            tempVal=tempNoise([i/size, j/size])
+            val=noise([i/size, j/size])
             
+<<<<<<< HEAD
             if (moistNoise([i/size, j/size])>-0.2):
                 moistLevel="LL"
             elif (moistNoise([i/size, j/size])>-0.1):
@@ -82,14 +74,13 @@ def generateTerrain(size,moisture,tempature):
             print(moistVal,tempVal)
             
             row.append(noiseVal)
+=======
+            row.append(val)
+>>>>>>> c5761ec (remove the if statements, gives a val of -0.5 to 0.5)
         pic.append(row)
         
         
-    plt.imshow(pic, cmap='gray')
-
-    plt.grid(False);plt.axis('off')
-
-    plt.show()
-    #print(pic)
-
-generateTerrain(size,moisture,tempature)
+    #plt.imshow(pic, cmap='gray')
+    #plt.grid(False);plt.axis('off')
+    #plt.show()
+#generateTerrain(size,10)
