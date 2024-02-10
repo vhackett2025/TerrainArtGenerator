@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import random 
 from perlin_noise import PerlinNoise
-size=256
-def generateTerrain(size,octaveVal):
 
+def generateTerrain(octaveVal):
+    size=256
 
     #size is the square dimentions
     #octaves = thing we change!
@@ -20,8 +20,8 @@ def generateTerrain(size,octaveVal):
             row.append(val+0.5)
         pic.append(row)
         
-        
-    plt.imshow(pic, cmap='gray')
-    plt.grid(False);plt.axis('off')
-    plt.show()
-generateTerrain(size,3)
+    return pic 
+    #plt.imshow(pic, cmap='gray')
+    #plt.grid(False);plt.axis('off')
+    #plt.show()
+#generateTerrain(size,3)
