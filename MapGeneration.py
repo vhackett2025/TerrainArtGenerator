@@ -17,67 +17,9 @@ def generateTerrain(size,octaveVal):
         for j in range(size):
             val=noise([i/size, j/size])
             
-<<<<<<< HEAD
-            if (moistNoise([i/size, j/size])>-0.2):
-                moistLevel="LL"
-            elif (moistNoise([i/size, j/size])>-0.1):
-                moistLevel="L"
-            elif (moistNoise([i/size, j/size])<0.2):
-                moistLevel="M"
-            elif (moistNoise([i/size, j/size])<0.1):
-                moistLevel="H"
-
-            if (moistNoise([i/size, j/size])>-0.2):
-                tempLevel="LL"
-            elif (moistNoise([i/size, j/size])>-0.1):
-                tempLevel="L"
-            elif (moistNoise([i/size, j/size])<0.2):
-                tempLevel="M"
-            elif (moistNoise([i/size, j/size])<0.1):
-                tempLevel="H"
-                
-            if (moistLevel=="M"and tempLevel=="LL"):
-                noiseVal=3
-                #Polar Ice
-            if (moistLevel=="L"and tempLevel=="LL"):
-                noiseVal=2.8
-                #Polar Desert
-            if (moistLevel=="M"and tempLevel=="L"):
-                noiseVal=2.6
-                #Tundra
-            if (moistLevel=="L"and tempLevel=="LL"):
-                noiseVal=2.4
-                #Boreal
-            if (moistLevel=="L"and tempLevel=="M"):
-                noiseVal=2.2
-                #Cool Desert Scrub
-            if (moistLevel=="L"and tempLevel=="M"):
-                noiseVal=2.2
-                #Tempature fields
-            if (moistLevel=="H"and tempLevel=="M"):
-                noiseVal=2.0
-                #Temprature Woods
-            if (moistLevel=="L"and tempLevel=="H"):
-                noiseVal=1.8
-                #Savanna Shrubs
-            if (moistLevel=="M"and tempLevel=="H"):
-                noiseVal=1.6
-                #Tropic Woods
-            if (moistLevel=="H"and tempLevel=="H"):
-                noiseVal=1.0
-                
-            
-                
-            noiseVal=0
-            #noiseVal += moistNoise([i/size, j/size])
-            #noiseVal += moistNoise([i/size, j/size])
-            print(moistVal,tempVal)
-            
-            row.append(noiseVal)
-=======
             row.append(val)
->>>>>>> c5761ec (remove the if statements, gives a val of -0.5 to 0.5)
         pic.append(row)
+    return pic
         
         
     #plt.imshow(pic, cmap='gray')
