@@ -11,3 +11,4 @@ plt.imshow(pic, cmap='gray')
 plt.grid(False);plt.axis('off')
 
 plt.show()
+print("ELLO")
