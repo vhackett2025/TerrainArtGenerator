@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import random 
 from perlin_noise import PerlinNoise
-size=16
+size=256
 def generateTerrain(size,octaveVal):
 
 
@@ -17,12 +17,11 @@ def generateTerrain(size,octaveVal):
         for j in range(size):
             val=noise([i/size, j/size])
             
-            row.append(val)
+            row.append(val+0.5)
         pic.append(row)
-    return pic
         
         
-    #plt.imshow(pic, cmap='gray')
-    #plt.grid(False);plt.axis('off')
-    #plt.show()
-#generateTerrain(size,10)
+    plt.imshow(pic, cmap='gray')
+    plt.grid(False);plt.axis('off')
+    plt.show()
+generateTerrain(size,3)
