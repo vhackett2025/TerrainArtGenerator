@@ -1,11 +1,13 @@
 import matplotlib.pyplot as plt
 from perlin_noise import PerlinNoise
+size=32
 
 noise = PerlinNoise(octaves=10, seed=1)
-xpix, ypix = 100, 100
-pic = [[noise([i/xpix, j/ypix]) for j in range(xpix)] for i in range(ypix)]
+
+pic = [[noise([i/size, j/size]) for j in range(size)] for i in range(size)]
 
 plt.imshow(pic, cmap='gray')
-#print(pic)
+
+plt.grid(False);plt.axis('off')
 
 plt.show()
