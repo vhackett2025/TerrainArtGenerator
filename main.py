@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from PIL import Image, ImageTk
 
 from texture_map_handler import *
 from MapGeneration import *
@@ -23,12 +24,14 @@ def generate_parameter_slider(root, label_name: str):
     slider.pack(side= tk.TOP, anchor="w", padx=5)
     return var
 
-def update_canvas_widget(root, size: int, tile_size: int, parameter_maps: dict, wetness: float):
-    # remove existing canvas
-    # loop over noise map
-    # use above method to get texture coords
-    # 
-    pass
+def update_canvas_widget(root, canvas: tk.Canvas, size: int, tile_size: int, parameter_maps: dict, wetness: float):
+    canvas.pack_forget()
+    for y in range(size):
+        for x in range(size):
+            texture_name = get_file_name_from_noise_values(parameter_maps['temperature'][x][y], parameter_maps['humidity'][x][y])
+            canvas.create_image(x * tile_size, y * tile_size, image=ImageTk.PhotoImage(file=texture_name), anchor="center")
+            
+    canvas.place(relx=0.34, rely=0)
 
 def main():
     
@@ -55,11 +58,15 @@ def main():
         'wetness' : generate_parameter_slider(root, "Wetness:"),
     }
     
-    lambda_update_canvas_widget = lambda: update_canvas_widget(root, size=10, tile_size=8, parameter_maps={
+    lambda_update_canvas_widget = lambda: update_canvas_widget(root, canvas, size=10, tile_size=8, parameter_maps={
         'height' : generateTerrain(int(climate_variables['height_extremeness'].get()) / 10),
         'temperature' : generateTerrain(int(climate_variables['temperature'].get()) / 10),
         'humidity' : generateTerrain(int(climate_variables['humidity'].get()) / 10)
         }, wetness=int(climate_variables['wetness'].get()))
+    
+    # Default canvas
+    canvas = tk.Canvas(root, width= 100, height=100)
+    canvas.place(relx=0.34, rely=0)
 
     # "Generate" button
     generate_button = tk.Button(root, text='Generate!', width=25, command=lambda_update_canvas_widget)
