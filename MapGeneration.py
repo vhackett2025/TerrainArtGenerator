@@ -3,7 +3,7 @@ import random
 from perlin_noise import PerlinNoise
 import math
 
-def generateTerrain(octaveVal,offsetVal,showPlot = False):
+def generateTerrain(octaveVal, offsetVal,showPlot = False):
     size=256
 
     #size is the square dimentions
