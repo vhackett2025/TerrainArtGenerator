@@ -7,6 +7,8 @@ import random
 from texture_map_handler import *
 from MapGeneration import *
 
+print(tk.TkVersion)
+
 SCREEN_DIMENTIONS = "756x512"
 
 FONT_XL = ("Courier ", 14, "bold", 'underline')
@@ -46,6 +48,7 @@ def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variab
             img_enhancer = ImageEnhance.Brightness(img)
             img = img_enhancer.enhance((parameter_maps['height'][x][y] + 0.5))
             img = img.resize((16,16))
+            
             image_cache[(x, y)] = ImageTk.PhotoImage(img)
             canvas.create_image(x * 16, y * 16, image=image_cache[(x, y)])
             
