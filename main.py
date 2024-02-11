@@ -75,6 +75,7 @@ def main():
     root = tk.Tk()
     root.title('Terrain Art Generator')
     root.geometry("900x600")
+    root.iconbitmap("icon.ico")
     
     # Vertical UI seperator line
     
@@ -104,12 +105,12 @@ def main():
     
     # Default canvas
     canvas = tk.Canvas(root, width= 510, height=510)
-    canvas.place(x=500, rely=0.1)
+    canvas.place(x=500, rely=0.12)
     canvas.configure(bg='grey12')
 
     # "Generate" button
     generate_button = tk.Button(root, text='Generate!', width=25, command=lambda_update_canvas_widget)
-    generate_button.config(font =FONT_LARGE)
+    generate_button.config(font =FONT_LARGE, bg="grey50", fg="white")
     generate_button.pack(side= tk.BOTTOM, anchor="w", padx=5, pady=5)
 
     root.mainloop()
