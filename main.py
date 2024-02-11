@@ -28,12 +28,12 @@ def generate_parameter_slider(root, label_name: str):
     slider.pack(side= tk.TOP, anchor="w", padx=5)
     return var
             
-def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict):
+def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variables):
     for x in range(32):
         for y in range(32):
             
             tileset = "textures/groundTileSet/"
-            if random.randrange(4) == 0:
+            if random.randrange(100) in range(int(climate_variables['tree_density'].get())):
                 tileset = "textures/decalTileSet/"
                 
             texture_filepath = tileset + get_file_name_from_noise_values(parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
@@ -65,13 +65,14 @@ def main():
         'temperature' : generate_parameter_slider(root, "Temperature:"),
         'humidity' : generate_parameter_slider(root, "Humidity:"),
         'wetness' : generate_parameter_slider(root, "Wetness:"),
+        'tree_density' : generate_parameter_slider(root, "Tree Density:")
     }
     
     lambda_update_canvas_widget = lambda: update_canvas_widget(canvas, parameter_maps={
         'height' : generateTerrain(int(climate_variables['height_extremeness'].get()) / 2, False),
         'temperature' : generateTerrain(int(climate_variables['temperature'].get()) / 2, False),
         'humidity' : generateTerrain(int(climate_variables['humidity'].get()) / 2, False)
-        })
+        }, climate_variables = climate_variables)
     
     # Default canvas
     canvas = tk.Canvas(root, width= 512, height=512)
