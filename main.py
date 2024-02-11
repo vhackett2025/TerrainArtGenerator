@@ -38,7 +38,7 @@ def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variab
                 tileset = "textures/decalTileSet/"
                 
             # check for water
-            if parameter_maps['height'][x][y] < (int(climate_variables['sea_level'].get())/333):
+            if parameter_maps['height'][x][y] < (int(climate_variables['sea_level'].get())/222):
                 texture_filepath = "textures/waterTileSet/1.png"
             else:
                 texture_filepath = tileset + get_file_name_from_noise_values(parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
