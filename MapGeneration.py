@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import random 
 from perlin_noise import PerlinNoise
 
-def generateTerrain(octaveVal,offsetVal,*showPlot):
+def generateTerrain(octaveVal,offsetVal,showPlot = False):
     size=256
 
     #size is the square dimentions
@@ -17,7 +17,7 @@ def generateTerrain(octaveVal,offsetVal,*showPlot):
         for j in range(size):
             val=noise([i/size, j/size])
         
-            row.append(((val+0.5)/(101-offsetVal)))
+            row.append(((val+0.5)) + (offsetVal - 50)/100)
             
         pic.append(row)
     

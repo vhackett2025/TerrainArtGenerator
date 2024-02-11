@@ -69,9 +69,9 @@ def main():
     }
     
     lambda_update_canvas_widget = lambda: update_canvas_widget(canvas, parameter_maps={
-        'height' : generateTerrain(10, int(climate_variables['height_extremeness'].get()), False),
-        'temperature' : generateTerrain(10, int(climate_variables['temperature'].get()), False),
-        'humidity' : generateTerrain(10, int(climate_variables['humidity'].get()), False)
+        'height' : generateTerrain(10, int(climate_variables['height_extremeness'].get())),
+        'temperature' : generateTerrain(10, int(climate_variables['temperature'].get())),
+        'humidity' : generateTerrain(10, int(climate_variables['humidity'].get()))
         }, climate_variables = climate_variables)
     
     # Default canvas
