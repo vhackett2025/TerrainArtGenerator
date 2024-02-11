@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import random 
 from perlin_noise import PerlinNoise
 
-def generateWater(offsetVal,showPlot=False):
+def generateWater(octaveVal,offsetVal,showPlot=False):
     size=256
-    octaveVal = 15
+    
     #size is the square dimentions
     #octaves = thing we change!
     #seed is randomness its just random :P
