@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 
+import random
+
 from texture_map_handler import *
 from MapGeneration import *
 
@@ -25,21 +27,16 @@ def generate_parameter_slider(root, label_name: str):
     slider.set(50)
     slider.pack(side= tk.TOP, anchor="w", padx=5)
     return var
-
-#def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict):
-    #for y in range(32):
-        #for x in range(32):
-            #texture_name = get_file_name_from_noise_values(parameter_maps['temperature'][x][y], parameter_maps['humidity'][x][y])
-            #img = Image.open(texture_name)
-            #img = img.resize((16,16))
-            #img = ImageTk.PhotoImage(img)
-            #canvas.create_image(x, y, image=img)
             
 def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict):
     for x in range(32):
         for y in range(32):
-            texture_filepath = get_file_name_from_noise_values(parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
-            #print(texture_filepath, parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
+            
+            tileset = "textures/groundTileSet/"
+            if random.randrange(4) == 0:
+                tileset = "textures/decalTileSet/"
+                
+            texture_filepath = tileset + get_file_name_from_noise_values(parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
             img = Image.open(texture_filepath)
             img = img.resize((16,16))
             image_cache[(x, y)] = ImageTk.PhotoImage(img)
