@@ -36,7 +36,7 @@ def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variab
     # Set loading screen
     loading_screen_img = Image.open("loading_screen.png")
     image_cache[(-1, -1)] = ImageTk.PhotoImage(loading_screen_img)
-    canvas.create_image(256, 256, image=image_cache[(-1, -1)])
+    canvas.create_image(257, 257, image=image_cache[(-1, -1)])
     canvas.update_idletasks()
     
     for x in range(SIZE):
