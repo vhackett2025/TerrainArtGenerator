@@ -7,6 +7,9 @@ import random
 from texture_map_handler import *
 from MapGeneration import *
 
+SIZE = 64
+TILE_SIZE = 8
+
 SCREEN_DIMENTIONS = "756x512"
 
 FONT_XL = ("Courier ", 14, "bold", 'underline')
@@ -30,8 +33,8 @@ def generate_parameter_slider(root, label_name: str):
             
 def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variables):
     
-    for x in range(32):
-        for y in range(32):
+    for x in range(SIZE):
+        for y in range(SIZE):
             
             tileset = "textures/groundTileSet/"
             if random.randrange(100) in range(math.ceil(int(climate_variables['tree_density'].get())/1.5)):
@@ -47,12 +50,12 @@ def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variab
             img = Image.open(texture_filepath)
             img_enhancer = ImageEnhance.Brightness(img)
             if "water" not in texture_filepath:
-                img = img_enhancer.enhance((parameter_maps['height'][x][y] + 0.5))
+                img = img_enhancer.enhance(((parameter_maps['height'][x][y] - 0.5) * (int(climate_variables['height_extremeness'].get())/50) + 1))
             img = img.resize((16,16))
             if "ground" in texture_filepath:
                 img = img.rotate(90 * random.randrange(4), expand=1)
             image_cache[(x, y)] = ImageTk.PhotoImage(img)
-            canvas.create_image(x * 16, y * 16, image=image_cache[(x, y)])
+            canvas.create_image(x * TILE_SIZE, y * TILE_SIZE, image=image_cache[(x, y)])
             
 def main():
     
@@ -73,22 +76,22 @@ def main():
     
     # Parameter Sliders
     climate_variables = {
-        'height_extremeness' : generate_parameter_slider(root, "Height Extremeness:"),
         'temperature' : generate_parameter_slider(root, "Temperature:"),
         'humidity' : generate_parameter_slider(root, "Humidity:"),
         'sea_level' : generate_parameter_slider(root, "Sea Level:"),
+        'octaves' : generate_parameter_slider(root, "Detail:"),
+        'height_extremeness' : generate_parameter_slider(root, "Height Extremeness:"),
         'tree_density' : generate_parameter_slider(root, "Tree Density:"),
-        'octaves' : generate_parameter_slider(root, "Detail:")
     }
     
     lambda_update_canvas_widget = lambda: update_canvas_widget(canvas, parameter_maps={
-        'height' : generateTerrain(math.ceil(int(climate_variables['octaves'].get()) / 3.33), int(climate_variables['height_extremeness'].get())),
+        'height' : generateTerrain(math.ceil(int(climate_variables['octaves'].get()) / 3.33), 50),
         'temperature' : generateTerrain(math.ceil(int(climate_variables['octaves'].get()) / 3.33), int(climate_variables['temperature'].get())),
         'humidity' : generateTerrain(math.ceil(int(climate_variables['octaves'].get()) / 3.33), int(climate_variables['humidity'].get()))
         }, climate_variables = climate_variables)
     
     # Default canvas
-    canvas = tk.Canvas(root, width= 512, height=512)
+    canvas = tk.Canvas(root, width= 1024, height=1024)
     canvas.place(relx=0.34, rely=0.01)
 
     # "Generate" button
