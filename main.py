@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, IntVar, Checkbutton
 from PIL import Image, ImageTk, ImageEnhance
 
 import random
@@ -28,10 +28,16 @@ def generate_parameter_slider(root, label_name: str):
     label.pack(side= tk.TOP, anchor="w", padx=5, pady = (10, 0))
     slider = tk.Scale(root, variable=var, from_=1, to=100, orient=tk.HORIZONTAL, sliderlength=20, length=270)
     slider.set(50)
-    slider.pack(side= tk.TOP, anchor="w", padx=5)
+    slider.pack(side= tk.TOP, anchor="w", padx=10)
     return var
             
 def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variables):
+    
+    # Set loading screen
+    loading_screen_img = Image.open("loading_screen.png")
+    image_cache[(-1, -1)] = ImageTk.PhotoImage(loading_screen_img)
+    canvas.create_image(256, 256, image=image_cache[(-1, -1)])
+    canvas.update_idletasks()
     
     for x in range(SIZE):
         for y in range(SIZE):
@@ -67,7 +73,7 @@ def main():
     # Vertical UI seperator line
     
     separator = ttk.Separator(root, orient='vertical')
-    separator.place(relx=0.33, rely=0, relwidth=1, relheight=1)
+    separator.place(x=300, rely=0, relwidth=1, relheight=1)
 
     # Big Parameter Label
     parameter_label = tk.Label(root, text = "Parameters")
@@ -91,8 +97,9 @@ def main():
         }, climate_variables = climate_variables)
     
     # Default canvas
-    canvas = tk.Canvas(root, width= 1024, height=1024)
-    canvas.place(relx=0.34, rely=0.01)
+    canvas = tk.Canvas(root, width= 510, height=510)
+    canvas.place(x=500, rely=0.1)
+    canvas.configure(bg='grey12')
 
     # "Generate" button
     generate_button = tk.Button(root, text='Generate!', width=25, command=lambda_update_canvas_widget)
