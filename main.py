@@ -7,8 +7,6 @@ import random
 from texture_map_handler import *
 from MapGeneration import *
 
-print(tk.TkVersion)
-
 SCREEN_DIMENTIONS = "756x512"
 
 FONT_XL = ("Courier ", 14, "bold", 'underline')
@@ -42,13 +40,16 @@ def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variab
             # check for water
             if parameter_maps['height'][x][y] < (int(climate_variables['sea_level'].get())/222):
                 texture_filepath = "textures/waterTileSet/1.png"
+                if parameter_maps['temperature'][x][y] < 0.25:
+                    texture_filepath = "textures/groundTileSet/1_0.png"
             else:
                 texture_filepath = tileset + get_file_name_from_noise_values(parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
             img = Image.open(texture_filepath)
             img_enhancer = ImageEnhance.Brightness(img)
             img = img_enhancer.enhance((parameter_maps['height'][x][y] + 0.5))
             img = img.resize((16,16))
-            
+            if "ground" in texture_filepath:
+                img = img.rotate(90 * random.randrange(4), expand=1)
             image_cache[(x, y)] = ImageTk.PhotoImage(img)
             canvas.create_image(x * 16, y * 16, image=image_cache[(x, y)])
             
