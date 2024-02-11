@@ -39,7 +39,7 @@ def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict):
     for x in range(32):
         for y in range(32):
             texture_filepath = get_file_name_from_noise_values(parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
-            print(texture_filepath, parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
+            #print(texture_filepath, parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
             img = Image.open(texture_filepath)
             img = img.resize((16,16))
             image_cache[(x, y)] = ImageTk.PhotoImage(img)
