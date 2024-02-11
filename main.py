@@ -3,6 +3,7 @@ from tkinter import ttk, IntVar, Checkbutton
 from PIL import Image, ImageTk, ImageEnhance
 
 import random
+from pygame import mixer
 
 from texture_map_handler import *
 from MapGeneration import *
@@ -62,6 +63,11 @@ def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variab
                 img = img.rotate(90 * random.randrange(4), expand=1)
             image_cache[(x, y)] = ImageTk.PhotoImage(img)
             canvas.create_image(x * TILE_SIZE, y * TILE_SIZE, image=image_cache[(x, y)])
+    
+    mixer.init()
+    mixer.music.load("ding.mp3")
+    mixer.music.set_volume(0.7)
+    mixer.music.play()
             
 def main():
     
