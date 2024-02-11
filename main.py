@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageEnhance
 
 import random
 
@@ -39,7 +39,8 @@ def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variab
                 
             texture_filepath = tileset + get_file_name_from_noise_values(parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
             img = Image.open(texture_filepath)
-            img = img.point(lambda p: p * (parameter_maps['height'][x][y] + 0.5))
+            img_enhancer = ImageEnhance.Brightness(img)
+            img = img_enhancer.enhance((parameter_maps['height'][x][y] + 0.5))
             img = img.resize((16,16))
             image_cache[(x, y)] = ImageTk.PhotoImage(img)
             canvas.create_image(x * 16, y * 16, image=image_cache[(x, y)])
