@@ -29,4 +29,3 @@ def generateTerrain(octaveVal,offsetVal,*showPlot):
     #plt.imshow(pic, cmap='gray')
     #plt.grid(False);plt.axis('off')
     #plt.show()
-generateTerrain(10,32,True)
