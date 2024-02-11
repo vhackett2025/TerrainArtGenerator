@@ -18,7 +18,6 @@ def generateTerrain(octaveVal, offsetVal,showPlot = False):
         for j in range(size):
             
             val=noise([i/size, j/size])
-            val = math.pow(val, 1.00)
         
             row.append(((val+0.5)) + (offsetVal - 50)/100)
             
