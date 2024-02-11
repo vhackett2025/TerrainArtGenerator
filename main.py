@@ -34,11 +34,12 @@ def generate_parameter_slider(root, label_name: str):
             #canvas.create_image(x, y, image=img)
             
 def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict):
+    image_cache = {}
     for x in range(32):
         for y in range(32):
             texture_filepath = get_file_name_from_noise_values(parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
-            img = ImageTk.PhotoImage(file=texture_filepath)
-            canvas.create_image(x, y, image=img)
+            image_cache[(x, y)] = ImageTk.PhotoImage(file=texture_filepath)
+            canvas.create_image(x, y, image=image_cache[(x, y)])
             
 def main():
     
