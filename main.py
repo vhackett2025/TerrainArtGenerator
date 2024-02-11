@@ -12,6 +12,8 @@ FONT_LARGE = ("Courier ", 14)
 FONT_MEDIUM = ("Courier", 12)
 FONT_SMALL = ("Courier", 10)
 
+image_cache = {}
+
 # Creates a label and slider for a specified parameter, returns the slider's variable
 def generate_parameter_slider(root, label_name: str):
     
@@ -34,12 +36,13 @@ def generate_parameter_slider(root, label_name: str):
             #canvas.create_image(x, y, image=img)
             
 def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict):
-    image_cache = {}
     for x in range(32):
         for y in range(32):
             texture_filepath = get_file_name_from_noise_values(parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y])
-            image_cache[(x, y)] = ImageTk.PhotoImage(file=texture_filepath)
-            canvas.create_image(x, y, image=image_cache[(x, y)])
+            img = Image.open(texture_filepath)
+            img = img.resize((16,16))
+            image_cache[(x, y)] = ImageTk.PhotoImage(img)
+            canvas.create_image(x * 16, y * 16, image=image_cache[(x, y)])
             
 def main():
     
