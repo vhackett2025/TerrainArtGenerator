@@ -65,13 +65,14 @@ def main():
         'temperature' : generate_parameter_slider(root, "Temperature:"),
         'humidity' : generate_parameter_slider(root, "Humidity:"),
         'wetness' : generate_parameter_slider(root, "Wetness:"),
-        'tree_density' : generate_parameter_slider(root, "Tree Density:")
+        'tree_density' : generate_parameter_slider(root, "Tree Density:"),
+        'octaves' : generate_parameter_slider(root, "Detail:")
     }
     
     lambda_update_canvas_widget = lambda: update_canvas_widget(canvas, parameter_maps={
-        'height' : generateTerrain(10, int(climate_variables['height_extremeness'].get())),
-        'temperature' : generateTerrain(10, int(climate_variables['temperature'].get())),
-        'humidity' : generateTerrain(10, int(climate_variables['humidity'].get()))
+        'height' : generateTerrain(math.ceil(int(climate_variables['octaves'].get()) / 3.33), int(climate_variables['height_extremeness'].get())),
+        'temperature' : generateTerrain(math.ceil(int(climate_variables['octaves'].get()) / 3.33), int(climate_variables['temperature'].get())),
+        'humidity' : generateTerrain(math.ceil(int(climate_variables['octaves'].get()) / 3.33), int(climate_variables['humidity'].get()))
         }, climate_variables = climate_variables)
     
     # Default canvas
