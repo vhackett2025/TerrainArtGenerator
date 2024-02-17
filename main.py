@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk, IntVar, Checkbutton
 from PIL import Image, ImageTk, ImageEnhance
 
+import os
+
 import random
 from pygame import mixer
 
@@ -11,7 +13,11 @@ from MapGeneration import *
 SIZE = 64
 TILE_SIZE = 8
 
+ROOT = os.path.dirname(os.path.abspath(__file__))
+
 SCREEN_DIMENTIONS = "756x512"
+
+
 
 FONT_XL = ("Courier ", 14, "bold", 'underline')
 FONT_LARGE = ("Courier ", 14)
@@ -34,24 +40,18 @@ def generate_parameter_slider(root, label_name: str):
             
 def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variables):
     
-    # Set loading screen
-    loading_screen_img = Image.open("loading_screen.png")
-    image_cache[(-1, -1)] = ImageTk.PhotoImage(loading_screen_img)
-    canvas.create_image(257, 257, image=image_cache[(-1, -1)])
-    canvas.update_idletasks()
-    
     for x in range(SIZE):
         for y in range(SIZE):
             
-            tileset = "textures/groundTileSet/"
+            tileset =  os.path.dirname(os.path.abspath(__file__))+"/textures/groundTileSet/"
             if random.randrange(100) in range(math.ceil(int(climate_variables['tree_density'].get())/1.5)):
-                tileset = "textures/decalTileSet/"
+                tileset =  os.path.dirname(os.path.abspath(__file__))+"/textures/decalTileSet/"
                 
             # check for water
             if parameter_maps['height'][x][y] < (int(climate_variables['sea_level'].get())/222):
-                texture_filepath = "textures/waterTileSet/0.png"
+                texture_filepath =  os.path.dirname(os.path.abspath(__file__))+"/textures/waterTileSet/0.png"
                 if parameter_maps['temperature'][x][y] < 0.25:
-                    texture_filepath = "textures/groundTileSet/1_0.png"
+                    texture_filepath = os.path.dirname(os.path.abspath(__file__))+"/textures/groundTileSet/1_0.png"
             else:
                 texture_filepath = tileset + get_file_name_from_noise_values(parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y] * 1.2)
             img = Image.open(texture_filepath)
@@ -75,7 +75,6 @@ def main():
     root = tk.Tk()
     root.title('Terrain Art Generator')
     root.geometry("900x600")
-    root.iconbitmap("icon.ico")
     
     # Vertical UI seperator line
     
