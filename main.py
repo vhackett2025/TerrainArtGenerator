@@ -9,6 +9,7 @@ from pygame import mixer
 
 from texture_map_handler import *
 from MapGeneration import *
+from heightGeneration import *
 
 SIZE = 64
 TILE_SIZE = 8
@@ -40,32 +41,56 @@ def generate_parameter_slider(root, label_name: str):
             
 def update_canvas_widget(canvas: tk.Canvas, parameter_maps: dict, climate_variables):
     
+    # Set loading screen
+    loading_screen_img = Image.open(os.path.dirname(os.path.abspath(__file__))+"\loading_screen.png")
+    image_cache[(-1, -1)] = ImageTk.PhotoImage(loading_screen_img)
+    canvas.create_image(257, 257, image=image_cache[(-1, -1)])
+    canvas.update_idletasks()
+    
     for x in range(SIZE):
         for y in range(SIZE):
             
-            tileset =  os.path.dirname(os.path.abspath(__file__))+"/textures/groundTileSet/"
+            tileset =  ROOT+"/textures/groundTileSet/"
             if random.randrange(100) in range(math.ceil(int(climate_variables['tree_density'].get())/1.5)):
-                tileset =  os.path.dirname(os.path.abspath(__file__))+"/textures/decalTileSet/"
+                tileset =  ROOT+"/textures/decalTileSet/"
                 
             # check for water
             if parameter_maps['height'][x][y] < (int(climate_variables['sea_level'].get())/222):
-                texture_filepath =  os.path.dirname(os.path.abspath(__file__))+"/textures/waterTileSet/0.png"
+                texture_filepath =  ROOT+"/textures/waterTileSet/0.png"
                 if parameter_maps['temperature'][x][y] < 0.25:
-                    texture_filepath = os.path.dirname(os.path.abspath(__file__))+"/textures/groundTileSet/1_0.png"
+                    texture_filepath = ROOT+"/textures/groundTileSet/1_0.png"
             else:
                 texture_filepath = tileset + get_file_name_from_noise_values(parameter_maps['humidity'][x][y], parameter_maps['temperature'][x][y] * 1.2)
+                
             img = Image.open(texture_filepath)
-            img_enhancer = ImageEnhance.Brightness(img)
-            if "water" not in texture_filepath:
-                img = img_enhancer.enhance(((parameter_maps['height'][x][y] - 0.5) * (int(climate_variables['height_extremeness'].get())/50) + 1))
+            
+            
+            #vivi changes 
+            #img_enhancer = ImageEnhance.Brightness(img)
+            
+            #if "water" not in texture_filepath:
+            #    img = img_enhancer.enhance(((parameter_maps['height'][x][y] - 0.5) * (int(climate_variables['height_extremeness'].get())/50) + 1))
             img = img.resize((16,16))
+            
             if "ground" in texture_filepath:
+                
                 img = img.rotate(90 * random.randrange(4), expand=1)
+            #show main thingy
             image_cache[(x, y)] = ImageTk.PhotoImage(img)
             canvas.create_image(x * TILE_SIZE, y * TILE_SIZE, image=image_cache[(x, y)])
+            
+    #show height
+    generateHeight(math.ceil(int(climate_variables['octaves'].get()) / 3.33), math.ceil(int(climate_variables['height_extremeness'].get())))
+    heightMap = Image.open(ROOT+"/tempHeightNew.png")
     
+   # heightMap=heightMap.resize((2,2))
+    
+    image_cache[(-1, -1)] = ImageTk.PhotoImage(heightMap)
+    canvas.create_image(257, 257, image=image_cache[(-1, -1)])
+    #canvas.update_idletasks()
+            
     mixer.init()
-    mixer.music.load("ding.mp3")
+    mixer.music.load(ROOT+"\ding.mp3")
     mixer.music.set_volume(0.7)
     mixer.music.play()
             
@@ -75,6 +100,7 @@ def main():
     root = tk.Tk()
     root.title('Terrain Art Generator')
     root.geometry("900x600")
+    root.iconbitmap(os.path.dirname(os.path.abspath(__file__))+"\icon.ico")
     
     # Vertical UI seperator line
     
